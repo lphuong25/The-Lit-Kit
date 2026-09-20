@@ -161,6 +161,27 @@ The project provided hands-on experience with:
 
 Developed as a team project for CS 4347.
 
+### Team Members
+
+* Phuong Le
+* Jose Beltran Gonzalez
+* Rebeca Rios
+* Timothy Mong
+* Shariq Hasan
+* Loi Nguyen
+
+### My Contributions
+
+My primary contributions to the project included:
+
+* Created proposal and concept for project
+* Processed and prepared library book data for database import using Python
+* Designed and implemented portions of the **relational database structure**
+* Developed **book recommendation logic** using book metadata, genres, and tags
+* Implemented and tested database queries used by the application
+* Contributed to the **web application's user and administrative functionality**
+* Tested application functionality and database integration
+
 # License
 
 This project was created for educational and portfolio purposes.
