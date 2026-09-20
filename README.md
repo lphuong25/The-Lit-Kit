@@ -1,7 +1,7 @@
 # The Lit Kit
 The Lit Kit is a team project for Database System course at UTDallas. This project is a book recommendation system for library which combines a relational database with book metadata and tag-based recommendation logic to help users discover books that match user's interests.
 
-Access it here: [The Lit Kit](https://thelitkit.page.gd/)
+**Access it here**: [The Lit Kit](https://thelitkit.page.gd/)
 
 **Disclaimers**: the book data belongs to UTDallas McDermott Library. The circulation data in this is recorded from 2013 to 2/2026
 
