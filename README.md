@@ -96,7 +96,7 @@ Admin Dashboard
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/lphuong25/The-Lit-Kit/tree/main
 ```
 
 2. Create the required database.
