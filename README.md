@@ -118,8 +118,11 @@ Create a .env file using the example and provide your own database credentials.
 Example:
 
 DB_HOST=your_database_host
+
 DB_USERNAME=your_database_username
+
 DB_PASSWORD=your_database_password
+
 DB_NAME=your_database_name
 
 Never commit .env or other files containing real credentials to GitHub.
