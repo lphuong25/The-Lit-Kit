@@ -11,7 +11,7 @@
     <div style="width:200px; text-align:right;">
         <?php
             if (isset($_SESSION['user_id'])) {
-                echo "<a href='/CS4347DatabaseProject/cs4347Project/phpFiles/user/logout.php' class='sign-in'>Logout</a>";
+                echo "<a href='../../phpFiles/user/logout.php' class='sign-in'>Logout</a>";
             }
         ?>
     </div>

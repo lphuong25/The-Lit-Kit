@@ -30,7 +30,7 @@
           $stmt->close();
           $conn->close();
           //Going to sign in page after account creation
-          header("Location: SignIn.php");
+          header("Location: signIn.php");
           exit();
         }
         else {

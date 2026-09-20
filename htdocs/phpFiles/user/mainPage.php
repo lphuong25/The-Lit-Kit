@@ -1,7 +1,23 @@
 <?php
-  require_once '../user/db_connect.php';
-  require_once 'admin_check.php';
+  require_once 'db_connect.php';
+  session_start();
+
+  $firstTime = true;
+
+  if (isset($_SESSION['user_id'])) {
+
+    $check = $conn->prepare("SELECT * FROM prefers WHERE userID = ?");
+    $check->bind_param("i", $_SESSION['user_id']);
+    $check->execute();
+    $result = $check->get_result();
+
+    // if user already has preferences → NOT first time
+    if ($result->num_rows > 0) {
+        $firstTime = false;
+  }
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +45,7 @@
     <div style="width:200px; text-align:right;">
         <?php
             if (isset($_SESSION['user_id'])) {
-                echo "<a href='/CS4347DatabaseProject/cs4347Project/phpFiles/user/logout.php' class='sign-in'>Logout</a>";
+                echo "<a href='logout.php' class='sign-in'>Logout</a>";
             }
         ?>
     </div>
@@ -37,16 +53,23 @@
 
   <!-- nav links -->
   <nav>
-    <a href="adminMainPage.php">Home</a>
-    <a href="manage_books.php">Books Inventory</a>
-    <a href="admin_account.php">Account</a>
+    <a href="mainPage.php">Home</a>
+    <a href="book_rec.php">My Books</a>
+    <a href="user_account.php">Account</a>
   </nav>
 
   <!-- main section of the page -->
   <main class="hero">
     <div class="hero-center">
       <h1 class="hero-title">Everything you <br>need to get back to<br>Literature</h1>
-        <a href="preferences.php" class="btn-start">Get Started</a>
+    <?php if (!isset($_SESSION['user_id'])): ?>
+      <a href="signIn.php" class="btn-start">Get Started</a>
+
+    <?php elseif ($firstTime): ?>
+      <a href="preferences.php" class="btn-start">Get Started</a>
+    <?php else: ?>
+      <a href="book_rec.php" class="btn-start">Go to Recommendations</a>
+    <?php endif; ?>
     </div>
   </main>
 

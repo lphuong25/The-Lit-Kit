@@ -1,7 +1,7 @@
 <?php 
 require_once '../user/db_connect.php';
 require_once 'admin_check.php';  
-
+include 'adminNavBar.php';
 
 //Actual Editing function
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -88,26 +88,20 @@ while($row = $result->fetch_assoc()){
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Edit Book | The Lit Kit</title>
-<!--links for fonts and style sheet-->
-    <link rel="stylesheet" href="/CS4347DatabaseProject/cs4347Project/css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Junge&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet"/>
-    <script src="https://kit.fontawesome.com/c00cc4f5f4.js" crossorigin="anonymous"></script>
-    <!---->
 
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=EB+Garamond&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/main.css">
 </head>
 
 <body>
-<?php include '../common/nav.php'; ?>
-<div class="card-background">
+
 <form method="POST" class="div-border">
 
 <h1>Edit Book</h1>
 
 <h3>Book Information</h3>
-<div class="form-text">
+
 <label>Title</label>
 <input type="text" name="title"
        value="<?= htmlspecialchars($book['Title']) ?>">
@@ -147,7 +141,7 @@ while($row = $result->fetch_assoc()){
        value="<?= htmlspecialchars($book['callNumber']) ?>">
 
 <input type="hidden" name="mmsID" value="<?= $book['mmsID'] ?>">
-    </div>
+
 <div class="div-button">
   <button type="submit">Update Book</button>
 </div>

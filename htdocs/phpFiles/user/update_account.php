@@ -2,12 +2,13 @@
 session_start();
 require_once 'db_connect.php';
 
-if (!isset($_SESSION['user_id'])) {
-    header("Location: signIn.php");
-    exit();
-}
-
 $current_user_id = $_SESSION['user_id'];
+
+$all_genres_query = $conn->query("SELECT genreName FROM genres ORDER BY genreName ASC");
+$all_genres = [];
+while($row = $all_genres_query->fetch_assoc()) {
+    $all_genres[] = $row['genreName'];
+}
 
 // Handle update
 if (isset($_POST['update'])) {
@@ -30,27 +31,31 @@ if (isset($_POST['update'])) {
     $deletePrefer->bind_param("i", $current_user_id);
     $deletePrefer->execute();
 
-    // insert new prefer data
-    $newGenres = [$_POST['genre1'], $_POST['genre2'], $_POST['genre3']];
+    // insert new prefer data (can be empty)
+    $newGenres = [
+        $_POST['genre1'] ?? '', 
+        $_POST['genre2'] ?? '', 
+        $_POST['genre3'] ?? ''
+    ];
 
-    if (count(array_unique($newGenres)) < 3) {
-    echo "<p style='color:red; text-align:center;'>Please select 3 different genres.</p>";
-    exit();
-}
+    // Remove empty selections and duplicates
+    $filteredGenres = array_filter(array_unique($newGenres));
 
-    foreach($newGenres as $gName) {
-        $getGid = $conn->prepare("SELECT genreID FROM genres WHERE genreName = ?");
-        $getGid->bind_param("s", $gName);
-        $getGid->execute();
-        $result = $getGid->get_result();
+    foreach($filteredGenres as $gName) {
+            if (!empty($gName)) {
+                $getGid = $conn->prepare("SELECT genreID FROM genres WHERE genreName = ?");
+                $getGid->bind_param("s", $gName);
+                $getGid->execute();
+                $result = $getGid->get_result();
 
-        if ($row = $result->fetch_assoc()) {
-            $gid = $row['genreID'];
-            $insert = $conn->prepare("INSERT INTO prefers (userID, genreID) VALUES (?, ?)");
-            $insert->bind_param("ii", $current_user_id, $gid);
-            $insert->execute();
+                if ($row = $result->fetch_assoc()) {
+                    $gid = $row['genreID'];
+                    $insert = $conn->prepare("INSERT INTO prefers (userID, genreID) VALUES (?, ?)");
+                    $insert->bind_param("ii", $current_user_id, $gid);
+                    $insert->execute();
+                }
+            }
         }
-    }
     $_SESSION['success'] = "Account and Preferences updated!";
     header("Location: user_account.php");
     exit();
@@ -111,18 +116,14 @@ if (isset($_POST['delete_acc'])) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Update Account | The Lit Kit</title>
 
- <!--links for fonts and style sheet-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Junge&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet"/>
-    <link rel="stylesheet" href="../../css/style.css">
-    <!---->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=EB+Garamond&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../css/main.css">
+<link rel="stylesheet" href="../../css/style.css">
 </head>
 
 <body>
-<?php include '../common/nav.php'; ?> 
-<!-- HEADER 
+
+<!-- HEADER -->
 <header class="top-bar">
     <div style="width:200px;"></div>
 
@@ -133,23 +134,25 @@ if (isset($_POST['delete_acc'])) {
     </div>
 </header>
 
-
+<!-- NAV -->
 <nav>
     <a href="mainPage.php">Home</a>
     <a href="book_rec.php">My Books</a>
     <a href="user_account.php">Account</a>
 </nav>
--->
+
 <!-- MAIN -->
-<main class="acct-main">
-<div class="card-background-acct">
+<main>
+
 <form action="update_account.php" method="POST">
 
-    <div class="div-border-long">
+<main class="card-background-acct">
+
+<div class="div-border">
 
     <!-- ACCOUNT DETAILS -->
     <h1>Update Account</h1>
-    <div class="form-text">
+
     <label for="name">Name</label>
     <input type="text" name="name" id="name"
            value="<?php echo htmlspecialchars($firstName . ' ' . $lastName); ?>" required>
@@ -157,45 +160,45 @@ if (isset($_POST['delete_acc'])) {
     <label for="email">Email</label>
     <input type="text" name="email" id="email"
            value="<?php echo htmlspecialchars($email); ?>" required>
-</div>
+
     <!-- PREFERENCES -->
     <h1>Update Preferences</h1>
     <h3>Your top 3 genres</h3>
-<div class="form-text">
-    <?php 
-        $all_genres = ["Journalism", "Film & Psychology", "Feminist Literature", "Media Theory", "Philosophy", "History"];
 
+    <?php 
         for ($i = 1; $i <= 3; $i++) {
             $current_val = ${"genre" . $i};
 
-            echo "<label>Choice $i</label>";
-            echo "<select id='genre$i' name='genre$i' required>";
+            echo "<label for='genre$i'>Choice $i (Optional)</label>";
+            echo "<div class='select-wrap'>";
+            // REMOVED 'required' from here
+            echo "<select id='genre$i' name='genre$i'>";
 
-            echo "<option value='' disabled " . ($current_val ? "" : "selected") . ">Select a genre</option>";
+            // Changed 'disabled' to 'enabled' so user can switch back to "no choice"
+            echo "<option value='' " . ($current_val ? "" : "selected") . ">None / Select a genre</option>";
 
             foreach ($all_genres as $option) {
                 $selected = ($option == $current_val) ? "selected" : "";
-                echo "<option value='$option' $selected>$option</option>";
+                echo "<option value='" . htmlspecialchars($option) . "' $selected>" . htmlspecialchars($option) . "</option>";
             }
 
             echo "</select>";
+            echo "</div>";
         }
     ?>
-    </div>
 
     <!-- UPDATE BUTTON -->
     <div class="div-button">
         <button type="submit" name="update">Update Account</button>
     </div>
-</div>
-</div>
 
-</form>
 </div>
+</form>
+
 </main>
-<div class="card-background-acct">
+
 <!-- DELETE BOX -->
-<div class="div-border-delete delete-box">
+<div class="div-border delete-box">
 
     <h1>Delete Account</h1>
 
@@ -210,7 +213,7 @@ if (isset($_POST['delete_acc'])) {
             </button>
         </div>
     </form>
-</div>
+
 </div>
 
 <script>

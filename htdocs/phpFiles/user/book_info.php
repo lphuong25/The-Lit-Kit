@@ -78,11 +78,11 @@ while($book_genre = $genre_result->fetch_assoc()) {
       <!-- book cover on the left -->
       <div class="book-left">
         <div class="book-cover"></div>
-        <p class="book-info">
-            <strong>MMSID:</strong> <?php echo htmlspecialchars($book['mmsID'] ?? 'N/A'); ?> <br>
-            <strong>Call Number:</strong> <?php echo htmlspecialchars($book['callNumber'] ?? 'N/A'); ?><br>
-            <strong>Genres:</strong> <?php echo !empty($genres) ? htmlspecialchars(implode(", ", $genres)) : 'None'; ?>
-        </p>
+          <p class="book-info">
+              <strong>MMSID:</strong> <?php echo htmlspecialchars($book['mmsID'] ?? 'N/A'); ?> <br>
+              <strong>Call Number:</strong> <?php echo htmlspecialchars($book['callNumber'] ?? 'N/A'); ?><br>
+              <strong>Genres:</strong> <?php echo !empty($genres) ? htmlspecialchars(implode(", ", $genres)) : 'None'; ?>
+          </p>
       </div>
 
       <!-- title and description on the right -->
@@ -96,11 +96,13 @@ while($book_genre = $genre_result->fetch_assoc()) {
 
     </div>
 
-    <!-- button to save the book -->
+    <!-- button to save the book - Skip for now -->
+    <!--
     <div class="btn-wrap">
       <button class="btn-add">Add to MyBooks</button>
     </div>
   </main>
+-->
 
   <script>
     // Added JavaScript to make dropdown interactive

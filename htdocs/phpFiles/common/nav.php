@@ -4,7 +4,6 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 $is_admin = isset($_SESSION['Role']) && $_SESSION['Role'] === 'admin';
-$current = basename($_SERVER['PHP_SELF']);
 ?>
 
 <header>
@@ -14,23 +13,22 @@ $current = basename($_SERVER['PHP_SELF']);
         <div class="profile-container">
             <button class="profile-button" onclick="toggleProfileDropdown()">
                 <?php echo htmlspecialchars($_SESSION['fname'] ?? 'Account'); ?>
-                <i class="fa-solid fa-chevron-down"></i>
+                <i class="fa-solid fa-angle-down"></i>
             </button>
             <div class="profile-dropdown" id="profile-dropdown">
-                <a href="../user/logout.php">Logout</a>
+                <a href="logout.php">Logout</a>
             </div>
         </div>
     </div>
     <nav>
-        
         <?php if ($is_admin): ?>
-            <a class="nav-a <?= $current === 'admin-dashboard.php' ? 'active' : '' ?>" href="../admin/admin-dashboard.php">Dashboard</a>
-            <a class="nav-a <?= $current === 'manage_books.php' ? 'active' : '' ?>" href="../admin/manage_books.php">Manage Books</a>
-            <a class="nav-a <?= $current === 'admin_account.php' ? 'active' : '' ?>"  href="../admin/admin_account.php">Account</a>
+            <a class="nav-a" href="../admin/adminMainPage.php">Dashboard</a>
+            <a class="nav-a" href="../admin/manage_books.php">Manage Books</a>
+            <a class="nav-a" href="../admin/admin_account.php">Account</a>
         <?php else: ?>
-            <a class="nav-a <?= $current === 'mainPage.php' ? 'active' : '' ?>" href="../user/mainPage.php">Home</a>
-            <a class="nav-a <?= $current === 'book_rec.php' ? 'active' : '' ?>" href="../user/book_rec.php">My Books</a>
-            <a class="nav-a <?= $current === 'user_account.php' ? 'active' : '' ?>" href="../user/user_account.php">Account</a>
+            <a class="nav-a" href="/user/mainPage.php">Home</a>
+            <a class="nav-a" href="../user/preferences.php">My Books</a>
+            <a class="nav-a" href="../user/user_account.php">Account</a>
         <?php endif; ?>
     </nav>
 </header>

@@ -67,7 +67,6 @@ $genres = $conn->query("SELECT genreID, genreName FROM genres");
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Junge&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="../../css/style.css">
     <!---->
     <title>Add Book</title>
@@ -78,7 +77,6 @@ $genres = $conn->query("SELECT genreID, genreName FROM genres");
     <form method="POST" class="div-border">
         <h1>Add Book</h1>
         <h3>Book Information</h3>
-        <div class="form-text">
         <label for="mmsID">MMS ID</label>
         <input type="text" name="mmsID" id="mmsID" required>
 
@@ -96,7 +94,7 @@ $genres = $conn->query("SELECT genreID, genreName FROM genres");
 
     <label>Genres</label>
     <div class="dropdown">
-        <button type="button" class="dropbtn" onclick="toggleDropdown()" style="font-family: 'Lato';">
+        <button type="button" class="dropbtn" onclick="toggleDropdown()">
             Select Genres (Click All That Apply)
         </button>
 
@@ -113,7 +111,7 @@ $genres = $conn->query("SELECT genreID, genreName FROM genres");
     </div>
     <label>Call Number</label>
     <input type="text" name="callNumber" id="callNumber" required>
-            </div>
+
         <div class="div-button">
             <button>Add Book</button>
         </div>

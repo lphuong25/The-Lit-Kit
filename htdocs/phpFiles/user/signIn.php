@@ -32,7 +32,7 @@
 
       if ($_SESSION['Role'] === 'admin') {
               // Go UP one level, then into admin *currently make manage_book as a placeholder*
-              header("Location: ../admin/admin-dashboard.php");
+              header("Location: ../admin/adminMainPage.php");
           } else {
               header("Location: ../user/mainPage.php");
               //header(__DIR__.'/mainPage.php');

@@ -163,6 +163,7 @@ nav {
   align-items: center;
   gap: 16px;
   flex-shrink: 0;
+  width: 300px;   
 }
 
 .book-cover {
@@ -176,8 +177,10 @@ nav {
   font-size: 1.25rem;
   color: #666;
   text-align: center;
+  width: 100%;              
+  word-wrap: break-word;    
+  overflow-wrap: break-word; 
 }
-
 .book-right {
   flex: 1;
 }

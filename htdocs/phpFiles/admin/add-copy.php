@@ -40,28 +40,26 @@ $book = $stmt->get_result()->fetch_assoc();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Junge&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="../../css/style.css">
     <!---->
     <title>Add Book</title>
 </head>
 <body class="centered-body">
-    <?php include '../common/nav.php'; ?> 
-    <form method="POST" class="div-border">
-        <h1>Add Copy</h1>
-        <h3><?= htmlspecialchars($book['Title']) ?></h3>
+<form method="POST" class="div-border">
+    <h1>Add Copy</h1>
+    <h3><?= htmlspecialchars($book['Title']) ?></h3>
 
-    <!-- pass mmsID as hidden field-->
-        <input type="hidden" name="mmsID" value="<?= htmlspecialchars($mmsID) ?>">
+<!-- pass mmsID as hidden field-->
+    <input type="hidden" name="mmsID" value="<?= htmlspecialchars($mmsID) ?>">
 
-        <label for="barcode">Barcode</label>
-        <input type="text" name="barcode" id="barcode" required>
+    <label for="barcode">Barcode</label>
+    <input type="text" name="barcode" id="barcode" required>
 
-        <div class="div-button">
-            <button type="submit">Add Copy</button>
-        </div>
+    <div class="div-button">
+        <button type="submit">Add Copy</button>
+    </div>
 
-    </form>
+</form>
 
 </body>
 </html>
